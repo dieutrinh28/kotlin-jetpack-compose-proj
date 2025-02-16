@@ -1,4 +1,4 @@
-package com.example.jetpackcomposeapp.ui.screens
+package com.example.jetpackcomposeapp.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +24,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.jetpackcomposeapp.model.TodoItemModel
-import com.example.jetpackcomposeapp.model.initializeDummyData
-import com.example.jetpackcomposeapp.ui.components.TodoItemComponent
+import com.example.jetpackcomposeapp.domain.model.TodoModel
+import com.example.jetpackcomposeapp.domain.model.initializeDummyData
+import com.example.jetpackcomposeapp.presentation.components.TodoItemComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +52,7 @@ fun TodoListScreen() {
             })
             IconButton(
                 onClick = {
-                    todoList = todoList + TodoItemModel(
+                    todoList = todoList + TodoModel(
                         id = todoList.size + 1, title = newTodo, isCompleted = false
                     )
                     newTodo = ""

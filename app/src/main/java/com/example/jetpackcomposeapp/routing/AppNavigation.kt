@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.jetpackcomposeapp.ui.screens.LoginScreen
-import com.example.jetpackcomposeapp.ui.screens.TodoListScreen
+import com.example.jetpackcomposeapp.presentation.screens.LoginScreen
+import com.example.jetpackcomposeapp.presentation.screens.TodoListScreen
 
 @Composable
 fun AppNavigation() {
