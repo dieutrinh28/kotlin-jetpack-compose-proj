@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,14 +25,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.jetpackcomposeapp.domain.model.TodoModel
-import com.example.jetpackcomposeapp.domain.model.initializeDummyData
 import com.example.jetpackcomposeapp.presentation.components.TodoItemComponent
+import com.example.jetpackcomposeapp.presentation.viewmodel.TodoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoListScreen() {
-    var todoList by remember { mutableStateOf(initializeDummyData()) }
+fun TodoListScreen(viewModel: TodoViewModel) {
+    val todoList by viewModel.todoList.collectAsState()
     var newTodo by remember { mutableStateOf("") }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -52,11 +52,8 @@ fun TodoListScreen() {
             })
             IconButton(
                 onClick = {
-                    todoList = todoList + TodoModel(
-                        id = todoList.size + 1, title = newTodo, isCompleted = false
-                    )
+                    viewModel.addTodo(newTodo)
                     newTodo = ""
-
                 },
                 modifier = Modifier.size(48.dp)
             ) {
@@ -70,14 +67,10 @@ fun TodoListScreen() {
 
         todoList.forEach { todo ->
             TodoItemComponent(todo = todo, onToggle = {
-                todoList = todoList.map {
-                    if (it.id == todo.id) it.copy(isCompleted = !it.isCompleted) else it
-                }
+                viewModel.toggleTodo(todo)
             }, onDelete = {
-                todoList = todoList.filter { it.id != todo.id }
+                viewModel.deleteTodo(todo)
             })
         }
-
-
     }
 }
